@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://saygikurumsal.com/sitemap.xml
