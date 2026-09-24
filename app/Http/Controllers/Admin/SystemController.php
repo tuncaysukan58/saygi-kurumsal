@@ -57,9 +57,19 @@ class SystemController extends Controller
     public function clearCache(): RedirectResponse
     {
         Artisan::call('optimize:clear');
+        $output = Artisan::output();
+
+        if (function_exists('opcache_reset')) {
+            $opcacheCleared = opcache_reset();
+            $output .= $opcacheCleared
+                ? "\nPHP OPcache temizlendi.\n"
+                : "\nPHP OPcache temizlenemedi (fonksiyon devre dışı olabilir).\n";
+        } else {
+            $output .= "\nPHP OPcache bu sunucuda aktif değil veya erişilemiyor.\n";
+        }
 
         return redirect()->route('admin.system.index')
             ->with('status', 'Önbellek temizlendi.')
-            ->with('output', Artisan::output());
+            ->with('output', $output);
     }
 }
