@@ -88,7 +88,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('system/migrate', [SystemController::class, 'migrate'])->name('system.migrate');
     Route::post('system/seed', [SystemController::class, 'seed'])->name('system.seed');
     Route::post('system/clear-cache', [SystemController::class, 'clearCache'])->name('system.clear-cache');
-    Route::post('system/storage-link', [SystemController::class, 'storageLink'])->name('system.storage-link');
+    Route::match(['get', 'post'], 'system/storage-link', [SystemController::class, 'storageLink'])->name('system.storage-link');
 
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
