@@ -12,7 +12,7 @@
             @if ($post->cover_image)
                 <img src="{{ asset('storage/'.$post->cover_image) }}" alt="{{ $post->title }}" style="width:100%;border-radius:16px;margin-bottom:20px">
             @endif
-            <div>{!! nl2br(e($post->content)) !!}</div>
+            <div class="justify-text">{!! \App\Support\TextFormatter::paragraphs($post->content) !!}</div>
         </article>
         <aside class="sidebar">
             <div class="sidebox">

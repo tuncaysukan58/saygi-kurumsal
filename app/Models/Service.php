@@ -27,6 +27,6 @@ class Service extends Model
 
     public function sectors(): BelongsToMany
     {
-        return $this->belongsToMany(Sector::class)->orderBy('sectors.order');
+        return $this->belongsToMany(Sector::class)->withPivot('content')->orderBy('sectors.order');
     }
 }

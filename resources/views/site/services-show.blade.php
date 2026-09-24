@@ -27,21 +27,28 @@
         <article class="servicebody">
             <h2>{{ $service->title }}</h2>
             @if ($service->content)
-                <p class="lead">{!! nl2br(e($service->content)) !!}</p>
+                <div class="lead justify-text">{!! \App\Support\TextFormatter::paragraphs($service->content) !!}</div>
             @endif
 
             @foreach ($service->items as $item)
                 <div class="sustainblock tab-panel" id="item-{{ $item->id }}">
                     <h3>{{ $item->title }}</h3>
-                    <p>{{ $item->description }}</p>
+                    <div class="justify-text">{!! \App\Support\TextFormatter::paragraphs($item->description) !!}</div>
                 </div>
             @endforeach
 
             @if ($service->sectors->isNotEmpty())
-                <h3>Hizmet Verdiğimiz Sektörler</h3>
-                <div class="sectorchips">
+                <h3>Sektöre Özel Bilgiler</h3>
+                <div class="accord">
                     @foreach ($service->sectors as $sector)
-                        <a href="{{ route('sectors.show', $sector) }}">{{ $sector->title }}</a>
+                        @php $sectorText = $sector->pivot->content ?: $sector->description; @endphp
+                        @if ($sectorText)
+                            <details>
+                                <summary>{{ $service->title }} — {{ $sector->title }}</summary>
+                                <div class="justify-text">{!! \App\Support\TextFormatter::paragraphs($sectorText) !!}</div>
+                                <a href="{{ route('sectors.show', $sector) }}" style="display:inline-block;margin-top:8px;font-size:13px;font-weight:700;color:#f7941d">{{ $sector->title }} sektörünü incele →</a>
+                            </details>
+                        @endif
                     @endforeach
                 </div>
             @endif

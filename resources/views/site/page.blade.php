@@ -19,7 +19,7 @@
             @forelse ($page->sections as $section)
                 <div id="{{ $section->anchor ?: 'section-'.$section->id }}" class="sustainblock tab-panel">
                     <h2>{{ $section->title }}</h2>
-                    <div>{!! nl2br(e($section->content)) !!}</div>
+                    <div>{!! \App\Support\TextFormatter::paragraphs($section->content) !!}</div>
                 </div>
             @empty
                 <p>Bu sayfa için henüz içerik eklenmedi.</p>

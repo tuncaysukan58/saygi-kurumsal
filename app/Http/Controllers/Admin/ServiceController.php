@@ -40,7 +40,7 @@ class ServiceController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         $service = Service::create($data);
-        $service->sectors()->sync($request->input('sectors', []));
+        $service->sectors()->sync($this->sectorSyncData($request));
 
         return redirect()->route('admin.services.edit', $service)->with('status', 'Hizmet oluşturuldu.');
     }
@@ -61,7 +61,7 @@ class ServiceController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         $service->update($data);
-        $service->sectors()->sync($request->input('sectors', []));
+        $service->sectors()->sync($this->sectorSyncData($request));
 
         return back()->with('status', 'Hizmet güncellendi.');
     }
@@ -90,6 +90,25 @@ class ServiceController extends Controller
             'seo_keywords' => ['nullable', 'string', 'max:255'],
             'sectors' => ['nullable', 'array'],
             'sectors.*' => ['integer', 'exists:sectors,id'],
+            'sector_content' => ['nullable', 'array'],
+            'sector_content.*' => ['nullable', 'string'],
         ]);
+    }
+
+    /**
+     * Build the sync payload for the sectors() pivot, pairing each selected sector
+     * with the sector-specific content the admin wrote for it (if any).
+     */
+    private function sectorSyncData(Request $request): array
+    {
+        $selectedIds = $request->input('sectors', []);
+        $contents = $request->input('sector_content', []);
+
+        $sync = [];
+        foreach ($selectedIds as $sectorId) {
+            $sync[$sectorId] = ['content' => $contents[$sectorId] ?? null];
+        }
+
+        return $sync;
     }
 }

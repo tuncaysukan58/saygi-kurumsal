@@ -28,6 +28,7 @@
 <div>
     <x-input-label value="Detay İçeriği" />
     <textarea name="content" rows="6" class="block mt-1 w-full rounded-md border-slate-300">{{ old('content', $service->content ?? '') }}</textarea>
+    <p class="text-xs text-slate-400 mt-1">Uzun metinler otomatik olarak paragraflara bölünür. Kendi paragraf araların olsun isterseniz iki satır boşluk bırakarak (Enter'a iki kez basarak) ayırabilirsiniz.</p>
 </div>
 
 <div>
@@ -49,16 +50,30 @@
     </label>
 </div>
 
-@php $selectedSectorIds = old('sectors', ($service->sectors ?? collect())->pluck('id')->all()); @endphp
+@php
+    $selectedSectorIds = old('sectors', ($service->sectors ?? collect())->pluck('id')->all());
+    $existingSectorPivots = ($service->sectors ?? collect())->keyBy('id');
+@endphp
 <div>
     <x-input-label value="Hizmet Verdiğimiz Sektörler" />
-    <p class="text-xs text-slate-400 mt-1 mb-2">Bu hizmetin sayfasında "Hizmet Verdiğimiz Sektörler" bölümünde hangi sektörlerin gösterileceğini seçin.</p>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 border border-slate-200 rounded-lg p-3">
+    <p class="text-xs text-slate-400 mt-1 mb-2">
+        Bu hizmetin verildiği sektörleri işaretleyin. İsterseniz her sektöre özel bir açıklama yazabilirsiniz
+        (örn. "Fabrikalarda özel güvenlik hizmeti nasıl yürütülür"). Boş bırakılırsa sektörün genel açıklaması
+        gösterilir. Bu bölüm sayfada "Sektöre Özel Bilgiler" başlığı altında, tıklayınca açılan bir liste olarak
+        gösterilir.
+    </p>
+    <div class="space-y-2 border border-slate-200 rounded-lg p-3">
         @forelse ($allSectors as $sectorOption)
-            <label class="flex items-center gap-2 text-sm">
-                <input type="checkbox" name="sectors[]" value="{{ $sectorOption->id }}" @checked(in_array($sectorOption->id, $selectedSectorIds))>
-                {{ $sectorOption->title }}
-            </label>
+            @php $existingSector = $existingSectorPivots->get($sectorOption->id); @endphp
+            <div class="border border-slate-100 rounded-lg p-3">
+                <label class="flex items-center gap-2 text-sm font-medium">
+                    <input type="checkbox" name="sectors[]" value="{{ $sectorOption->id }}" @checked(in_array($sectorOption->id, $selectedSectorIds))>
+                    {{ $sectorOption->title }}
+                </label>
+                <textarea name="sector_content[{{ $sectorOption->id }}]" rows="2"
+                    placeholder="Bu sektöre özel açıklama (opsiyonel)"
+                    class="mt-2 block w-full rounded-md border-slate-300 text-sm">{{ old('sector_content.'.$sectorOption->id, $existingSector->pivot->content ?? '') }}</textarea>
+            </div>
         @empty
             <p class="text-sm text-slate-400">Henüz sektör eklenmedi.</p>
         @endforelse
