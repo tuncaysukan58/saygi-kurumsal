@@ -17,7 +17,17 @@ class SystemController extends Controller
         return view('admin.system.index', [
             'migrateStatus' => Artisan::output(),
             'hasDemoData' => Service::query()->exists(),
+            'storageLinked' => file_exists(public_path('storage')),
         ]);
+    }
+
+    public function storageLink(): RedirectResponse
+    {
+        Artisan::call('storage:link', ['--force' => true]);
+
+        return redirect()->route('admin.system.index')
+            ->with('status', 'Depolama bağlantısı (storage:link) oluşturuldu.')
+            ->with('output', Artisan::output());
     }
 
     public function migrate(): RedirectResponse

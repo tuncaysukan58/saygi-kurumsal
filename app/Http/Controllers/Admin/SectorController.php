@@ -63,7 +63,7 @@ class SectorController extends Controller
         return $request->validate([
             'title'           => ['required', 'string', 'max:255'],
             'icon'            => ['nullable', 'string', 'max:10'],
-            'description'     => ['nullable', 'string', 'max:1000'],
+            'description'     => ['nullable', 'string'],
             'order'           => ['nullable', 'integer'],
             'icon_image'      => ['nullable', 'image', 'max:2048'],
             'seo_title'       => ['nullable', 'string', 'max:255'],

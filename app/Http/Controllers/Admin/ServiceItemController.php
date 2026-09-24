@@ -38,7 +38,7 @@ class ServiceItemController extends Controller
     {
         return $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:1000'],
+            'description' => ['nullable', 'string'],
             'order' => ['nullable', 'integer'],
         ]);
     }

@@ -15,12 +15,14 @@
                     <a href="#item-{{ $item->id }}" class="tab-link">{{ $item->title }}</a>
                 @endforeach
             </div>
-            <div class="sidebox">
-                <b>Hizmet Verdiğimiz Sektörler</b>
-                @foreach ($sectors as $sector)
-                    <a href="{{ route('sectors.show', $sector) }}">{{ $sector->title }}</a>
-                @endforeach
-            </div>
+            @if ($service->sectors->isNotEmpty())
+                <div class="sidebox">
+                    <b>Hizmet Verdiğimiz Sektörler</b>
+                    @foreach ($service->sectors as $sector)
+                        <a href="{{ route('sectors.show', $sector) }}">{{ $sector->title }}</a>
+                    @endforeach
+                </div>
+            @endif
         </aside>
         <article class="servicebody">
             <h2>{{ $service->title }}</h2>
@@ -35,10 +37,10 @@
                 </div>
             @endforeach
 
-            @if ($sectors->isNotEmpty())
+            @if ($service->sectors->isNotEmpty())
                 <h3>Hizmet Verdiğimiz Sektörler</h3>
                 <div class="sectorchips">
-                    @foreach ($sectors as $sector)
+                    @foreach ($service->sectors as $sector)
                         <a href="{{ route('sectors.show', $sector) }}">{{ $sector->title }}</a>
                     @endforeach
                 </div>

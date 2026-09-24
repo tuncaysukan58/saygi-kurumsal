@@ -17,7 +17,7 @@
         @if ($project->result_metric)
             <p><strong>Sonuç: {{ $project->result_metric }}</strong></p>
         @endif
-        <div>{!! nl2br(e($project->content)) !!}</div>
+        <div class="justify-text">{!! nl2br(e($project->content)) !!}</div>
         <div class="bottomcta">
             <a href="{{ route('contact.index') }}#teklif">Benzer Bir Çözüm İçin Teklif Alın →</a>
             <a href="{{ route('projects.index') }}">Tüm Projeler →</a>

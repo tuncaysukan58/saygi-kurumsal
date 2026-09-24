@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Concerns\HandlesUploads;
 use App\Http\Controllers\Controller;
+use App\Models\Sector;
 use App\Models\Service;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,9 @@ class ServiceController extends Controller
 
     public function create(): View
     {
-        return view('admin.services.create');
+        return view('admin.services.create', [
+            'allSectors' => Sector::orderBy('order')->get(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -37,13 +40,17 @@ class ServiceController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         $service = Service::create($data);
+        $service->sectors()->sync($request->input('sectors', []));
 
         return redirect()->route('admin.services.edit', $service)->with('status', 'Hizmet oluşturuldu.');
     }
 
     public function edit(Service $service): View
     {
-        return view('admin.services.edit', ['service' => $service->load('items')]);
+        return view('admin.services.edit', [
+            'service' => $service->load('items', 'sectors'),
+            'allSectors' => Sector::orderBy('order')->get(),
+        ]);
     }
 
     public function update(Request $request, Service $service): RedirectResponse
@@ -54,6 +61,7 @@ class ServiceController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         $service->update($data);
+        $service->sectors()->sync($request->input('sectors', []));
 
         return back()->with('status', 'Hizmet güncellendi.');
     }
@@ -80,6 +88,8 @@ class ServiceController extends Controller
             'seo_title' => ['nullable', 'string', 'max:255'],
             'seo_description' => ['nullable', 'string', 'max:500'],
             'seo_keywords' => ['nullable', 'string', 'max:255'],
+            'sectors' => ['nullable', 'array'],
+            'sectors.*' => ['integer', 'exists:sectors,id'],
         ]);
     }
 }

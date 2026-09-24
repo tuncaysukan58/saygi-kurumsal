@@ -143,6 +143,11 @@ class DemoContentSeeder extends Seeder
             Sector::create([...$data, 'order' => $i]);
         }
 
+        $allSectorIds = Sector::pluck('id')->all();
+        foreach (Service::all() as $service) {
+            $service->sectors()->sync($allSectorIds);
+        }
+
         $certificates = [
             ['title' => 'Faaliyet / Yetki Belgeleri', 'category' => 'Yetki Belgesi', 'description' => 'Gerçek belge bilgileri eklenecek.'],
             ['title' => 'ISO / Kalite Belgeleri', 'category' => 'ISO', 'description' => 'Mevcut sertifikalar eklenecek.'],

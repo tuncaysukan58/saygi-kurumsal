@@ -32,7 +32,7 @@
             <p class="label">SEKTÖRLER</p>
             <h2>{{ $sector->title }}</h2>
             @if ($sector->description)
-                <p style="color:var(--muted);line-height:1.7;font-size:17px">{{ $sector->description }}</p>
+                <p style="color:var(--muted);line-height:1.7;font-size:17px;text-align:justify">{{ $sector->description }}</p>
             @endif
             <div class="bottomcta" style="margin-top:40px">
                 <a href="{{ route('contact.index') }}#teklif">Bu Sektör İçin Teklif Al →</a>

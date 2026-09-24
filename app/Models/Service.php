@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\HasSlug;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Service extends Model
@@ -22,5 +23,10 @@ class Service extends Model
     public function items(): HasMany
     {
         return $this->hasMany(ServiceItem::class)->orderBy('order');
+    }
+
+    public function sectors(): BelongsToMany
+    {
+        return $this->belongsToMany(Sector::class)->orderBy('sectors.order');
     }
 }

@@ -36,7 +36,24 @@
         </div>
 
         <div class="bg-white rounded-xl border border-slate-200 p-6">
-            <h2 class="font-semibold text-slate-700 mb-2">3. Önbelleği Temizle</h2>
+            <h2 class="font-semibold text-slate-700 mb-2">3. Görsel Bağlantısı (Storage Link)</h2>
+            @if ($storageLinked)
+                <p class="text-sm text-emerald-600 mb-4">✓ Bağlantı mevcut. Yüklediğiniz görseller (slaytlar, hizmet/sektör kartları vb.) görünür olmalı.</p>
+            @else
+                <div class="text-sm text-red-700 bg-red-50 border border-red-100 rounded-lg p-3 mb-4">
+                    ⚠️ Bu bağlantı eksik görünüyor. Eksikse admin panelden yüklediğiniz görseller (slayt, hizmet/sektör
+                    kartı vb.) sitede <strong>görünmez</strong>. Bu genelde hosting'e ilk yüklemeden sonra bir kez
+                    yapılması gerekir.
+                </div>
+            @endif
+            <form method="POST" action="{{ route('admin.system.storage-link') }}">
+                @csrf
+                <x-secondary-button>Görsel Bağlantısını Oluştur</x-secondary-button>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+            <h2 class="font-semibold text-slate-700 mb-2">4. Önbelleği Temizle</h2>
             <p class="text-sm text-slate-500 mb-4">Ayarları veya kodu güncelledikten sonra eski önbellek kalırsa kullanın.</p>
             <form method="POST" action="{{ route('admin.system.clear-cache') }}">
                 @csrf

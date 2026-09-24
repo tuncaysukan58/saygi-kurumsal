@@ -49,4 +49,20 @@
     </label>
 </div>
 
+@php $selectedSectorIds = old('sectors', ($service->sectors ?? collect())->pluck('id')->all()); @endphp
+<div>
+    <x-input-label value="Hizmet Verdiğimiz Sektörler" />
+    <p class="text-xs text-slate-400 mt-1 mb-2">Bu hizmetin sayfasında "Hizmet Verdiğimiz Sektörler" bölümünde hangi sektörlerin gösterileceğini seçin.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 border border-slate-200 rounded-lg p-3">
+        @forelse ($allSectors as $sectorOption)
+            <label class="flex items-center gap-2 text-sm">
+                <input type="checkbox" name="sectors[]" value="{{ $sectorOption->id }}" @checked(in_array($sectorOption->id, $selectedSectorIds))>
+                {{ $sectorOption->title }}
+            </label>
+        @empty
+            <p class="text-sm text-slate-400">Henüz sektör eklenmedi.</p>
+        @endforelse
+    </div>
+</div>
+
 @include('admin.partials._seo-fields', ['seoable' => $service])

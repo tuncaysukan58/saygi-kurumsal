@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Models\Sector;
 use App\Models\Service;
 use Illuminate\View\View;
 
@@ -21,8 +20,7 @@ class ServiceController extends Controller
         abort_unless($service->is_active, 404);
 
         return view('site.services-show', [
-            'service' => $service->load('items'),
-            'sectors' => Sector::orderBy('order')->get(),
+            'service' => $service->load('items', 'sectors'),
         ]);
     }
 }
