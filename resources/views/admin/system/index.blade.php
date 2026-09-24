@@ -31,7 +31,7 @@
             @endif
             <form method="POST" action="{{ route('admin.system.seed') }}" onsubmit="return confirm('Seeder çalıştırılsın mı? Bu işlem veri ekleyecektir.')">
                 @csrf
-                <x-secondary-button>Seeder Çalıştır</x-secondary-button>
+                <x-secondary-button type="submit">Seeder Çalıştır</x-secondary-button>
             </form>
         </div>
 
@@ -50,7 +50,7 @@
             @endif
             <form method="POST" action="{{ route('admin.system.storage-link') }}">
                 @csrf
-                <x-secondary-button>Görsel Bağlantısını Oluştur</x-secondary-button>
+                <x-secondary-button type="submit">Görsel Bağlantısını Oluştur</x-secondary-button>
             </form>
         </div>
 
@@ -59,7 +59,7 @@
             <p class="text-sm text-slate-500 mb-4">Ayarları veya kodu güncelledikten sonra eski önbellek kalırsa kullanın.</p>
             <form method="POST" action="{{ route('admin.system.clear-cache') }}">
                 @csrf
-                <x-secondary-button>Önbelleği Temizle</x-secondary-button>
+                <x-secondary-button type="submit">Önbelleği Temizle</x-secondary-button>
             </form>
         </div>
 
