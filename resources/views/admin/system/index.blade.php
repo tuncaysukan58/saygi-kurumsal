@@ -37,14 +37,16 @@
 
         <div class="bg-white rounded-xl border border-slate-200 p-6">
             <h2 class="font-semibold text-slate-700 mb-2">3. Görsel Bağlantısı (Storage Link)</h2>
+            <div class="text-sm text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-lg p-3 mb-4">
+                ℹ️ Site artık görselleri bu bağlantı olmasa da otomatik gösterebiliyor (paylaşımlı hosting'lerde
+                genelde kapalı olan <code>symlink()</code> fonksiyonuna ihtiyaç duymuyor). Yine de mümkünse
+                aşağıdaki butonla oluşturmayı deneyin — bazı hosting'lerde daha hızlı çalışmasını sağlar,
+                çalışmazsa görmezden gelebilirsiniz, site etkilenmez.
+            </div>
             @if ($storageLinked)
-                <p class="text-sm text-emerald-600 mb-4">✓ Bağlantı mevcut. Yüklediğiniz görseller (slaytlar, hizmet/sektör kartları vb.) görünür olmalı.</p>
+                <p class="text-sm text-emerald-600 mb-4">✓ Bağlantı mevcut.</p>
             @else
-                <div class="text-sm text-red-700 bg-red-50 border border-red-100 rounded-lg p-3 mb-4">
-                    ⚠️ Bu bağlantı eksik görünüyor. Eksikse admin panelden yüklediğiniz görseller (slayt, hizmet/sektör
-                    kartı vb.) sitede <strong>görünmez</strong>. Bu genelde hosting'e ilk yüklemeden sonra bir kez
-                    yapılması gerekir.
-                </div>
+                <p class="text-sm text-slate-500 mb-4">Bağlantı şu anda oluşturulmamış görünüyor.</p>
             @endif
             <form method="POST" action="{{ route('admin.system.storage-link') }}">
                 @csrf

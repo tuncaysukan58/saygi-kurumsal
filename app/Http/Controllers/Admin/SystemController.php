@@ -23,11 +23,17 @@ class SystemController extends Controller
 
     public function storageLink(): RedirectResponse
     {
-        Artisan::call('storage:link', ['--force' => true]);
+        try {
+            Artisan::call('storage:link', ['--force' => true]);
 
-        return redirect()->route('admin.system.index')
-            ->with('status', 'Depolama bağlantısı (storage:link) oluşturuldu.')
-            ->with('output', Artisan::output());
+            return redirect()->route('admin.system.index')
+                ->with('status', 'Depolama bağlantısı (storage:link) oluşturuldu.')
+                ->with('output', Artisan::output());
+        } catch (\Throwable $e) {
+            return redirect()->route('admin.system.index')
+                ->with('status', 'Bağlantı oluşturulamadı (hosting sembolik bağlantıya izin vermiyor olabilir). Önemli değil: görseller sitede zaten çalışmalı, aşağıdaki nota bakın.')
+                ->with('output', 'Hata: '.$e->getMessage());
+        }
     }
 
     public function migrate(): RedirectResponse
