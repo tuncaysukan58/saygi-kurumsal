@@ -3,10 +3,13 @@
         @csrf
         @method('PUT')
 
-        <div>
-            <x-input-label value="Logo" />
+        <div class="bg-orange-50 border border-orange-200 rounded-xl p-4">
+            <x-input-label value="Site Logosu" class="font-semibold" />
+            <p class="text-xs text-slate-500 mt-1 mb-2">Sitenin sol üst köşesinde (header) ve menüde görünen logo budur. Değiştirmek için yeni bir dosya seçip aşağıdaki "Kaydet" butonuna basmanız yeterli.</p>
             @if ($setting->logo_path)
-                <img src="{{ asset('storage/'.$setting->logo_path) }}" class="h-14 my-2" alt="Logo">
+                <img src="{{ asset('storage/'.$setting->logo_path) }}" class="h-14 my-2 bg-white p-2 rounded border border-slate-200" alt="Mevcut logo">
+            @else
+                <p class="text-xs text-amber-700 mb-2">Şu anda yüklenmiş bir logo yok, varsayılan yazı gösteriliyor.</p>
             @endif
             <input type="file" name="logo" accept="image/*" class="block mt-1">
             <x-input-error :messages="$errors->get('logo')" class="mt-1" />
