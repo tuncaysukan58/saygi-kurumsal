@@ -9,7 +9,7 @@
     <meta name="keywords" content="{{ $keywords }}">
 @endif
 <meta name="theme-color" content="#102d4e">
-<link rel="stylesheet" href="{{ asset('style.css') }}">
+<link rel="stylesheet" href="{{ asset('style.css') }}?v={{ @filemtime(public_path('style.css')) ?: '1' }}">
 </head>
 <body>
 <a class="skip-link" href="#main">İçeriğe geç</a>
@@ -124,7 +124,7 @@
     </div>
     <div class="copy wrap">© {{ date('Y') }} SAY Kurumsal. Tüm hakları saklıdır. <a href="{{ route('page.kvkk') }}" style="color:#9db0d5">KVKK &amp; Gizlilik</a></div>
 </footer>
-<script src="{{ asset('script.js') }}"></script>
+<script src="{{ asset('script.js') }}?v={{ @filemtime(public_path('script.js')) ?: '1' }}"></script>
 <div class="mobilebar">
     @if ($siteSetting->phone_primary)
         <a href="tel:{{ preg_replace('/\s+/', '', $siteSetting->phone_primary) }}"><x-icon name="phone" /> Ara</a>
