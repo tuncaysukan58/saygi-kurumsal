@@ -17,7 +17,7 @@
         <img src="{{ asset('storage/'.$service->icon_image) }}" class="h-16 my-2 rounded" alt="">
     @endif
     <input type="file" name="icon_image" accept="image/*" class="block mt-1">
-    <p class="text-xs text-slate-400 mt-1">Yüklenirse hizmet kartlarında emoji yerine bu görsel gösterilir. Önerilen: kare, en az 200x200px, PNG/SVG.</p>
+    <p class="text-xs text-slate-400 mt-1">Yüklenirse hizmet kartlarında emoji yerine bu görsel gösterilir. Fotoğraf (JPG/PNG/WebP) yüklerseniz kartın üst alanını tamamen kaplar (önerilen: yatay, en az 600x300px). SVG ikon yüklerseniz ortada küçük ikon olarak gösterilir.</p>
 </div>
 
 <div>

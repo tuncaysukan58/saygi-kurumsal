@@ -12,7 +12,7 @@
         <div class="cards">
             @foreach ($services as $service)
                 <article>
-                    <div class="pic">
+                    <div class="pic @if ($service->icon_image && ! str_ends_with(strtolower($service->icon_image), '.svg')) photo @endif">
                         @if ($service->icon_image)
                             <img src="{{ asset('storage/'.$service->icon_image) }}" alt="{{ $service->title }}">
                         @else
