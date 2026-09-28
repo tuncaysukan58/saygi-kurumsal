@@ -92,7 +92,7 @@
 <footer>
     <div class="wrap foot">
         <div class="brand footbrand">
-            <span class="mark"><i></i><i></i><i></i></span><b>SAY<small>KURUMSAL</small></b>
+            <a href="{{ route('home') }}"><img src="{{ asset('images/logo-beyaz.png') }}" alt="SAYGI Hizmet Grup" class="footlogo"></a>
             <p>{{ $siteSetting->footer_text ?: 'Yaşam alanlarınız için kurumsal çözümler.' }}</p>
         </div>
         <div>

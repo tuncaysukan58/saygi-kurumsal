@@ -7,9 +7,7 @@ use App\Http\Requests\Site\StoreJobApplicationRequest;
 use App\Mail\NewLeadNotification;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
-use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class CareerController extends Controller
@@ -33,16 +31,13 @@ class CareerController extends Controller
 
         $application = JobApplication::create($data);
 
-        $to = Setting::current()->email;
-        if ($to) {
-            Mail::to($to)->send(new NewLeadNotification('Yeni Kariyer Başvurusu', [
-                'Ad Soyad' => $application->name,
-                'Telefon' => $application->phone,
-                'E-posta' => $application->email,
-                'Departman' => $application->department,
-                'Ön Yazı' => $application->message,
-            ]));
-        }
+        NewLeadNotification::sendToAdmin('Yeni Kariyer Başvurusu', [
+            'Ad Soyad' => $application->name,
+            'Telefon' => $application->phone,
+            'E-posta' => $application->email,
+            'Departman' => $application->department,
+            'Ön Yazı' => $application->message,
+        ], $application->email);
 
         return response()->json(['message' => 'Başvurunuz başarıyla alındı. En kısa sürede sizinle iletişime geçeceğiz.']);
     }
