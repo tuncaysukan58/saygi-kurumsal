@@ -10,7 +10,7 @@
             @endif
             {{ $sector->title }}
         </h1>
-        @if ($sector->description)<p>{{ $sector->description }}</p>@endif
+        @if ($sector->description)<p>{{ Str::limit(trim(strtok(trim($sector->description), "\n")), 200) }}</p>@endif
     </div>
 </section>
 <section class="section">
@@ -32,7 +32,7 @@
             <p class="label">SEKTÖRLER</p>
             <h2>{{ $sector->title }}</h2>
             @if ($sector->description)
-                <p style="color:var(--muted);line-height:1.7;font-size:17px;text-align:justify">{{ $sector->description }}</p>
+                <div class="justify-text" style="color:var(--muted);font-size:17px">{!! \App\Support\TextFormatter::paragraphs($sector->description) !!}</div>
             @endif
             <div class="bottomcta" style="margin-top:40px">
                 <a href="{{ route('contact.index') }}#teklif">Bu Sektör İçin Teklif Al →</a>
